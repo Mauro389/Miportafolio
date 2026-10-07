@@ -1,0 +1,97 @@
+﻿@model miperfil.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Perfil Profesional";
+}
+
+<style>
+    body {
+        background-color: #0d1117 !important;
+        color: #c9d1d9 !important;
+    }
+
+    .hero-card, .custom-card {
+        background-color: #161b22 !important;
+        border: 1px solid #30363d !important;
+        color: #f0f6fc !important;
+    }
+
+    .project-img {
+        height: 220px;
+        object-fit: contain;
+        background-color: #0d1117;
+        padding: 8px;
+    }
+</style>
+
+<div class="container my-4">
+    <!-- Hero / Presentación Principal -->
+    <div class="p-5 mb-4 hero-card text-white rounded-3 shadow-lg text-center">
+        <h1 class="display-4 fw-bold text-white">@Model.FullName</h1>
+        <p class="fs-4 text-info fw-semibold">@Model.RoleTitle</p>
+        <p class="col-md-8 mx-auto lead text-light opacity-75">@Model.Summary</p>
+
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <a href="@Model.GithubUrl" target="_blank" class="btn btn-outline-light btn-lg px-4">
+                GitHub
+            </a>
+        </div>
+    </div>
+
+    <!-- Habilidades Principales -->
+    <div class="row g-4 mb-4">
+        @foreach (var category in Model.SkillCategories)
+        {
+            <div class="col-md-6">
+                <div class="h-100 p-4 custom-card rounded-3 shadow-sm">
+                    <h3 class="fw-bold mb-3 text-info">@category.CategoryName</h3>
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach (var skill in category.Skills)
+                        {
+                            <span class="badge bg-primary fs-6 px-3 py-2 shadow-sm">@skill</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- SECCIÓN DE PROYECTOS DESTACADOS -->
+    <h2 class="fw-bold text-white mb-3"> Proyectos Destacados</h2>
+    <div class="row g-4 mb-4">
+        @foreach (var project in Model.Projects)
+        {
+            <div class="col-md-4">
+                <div class="h-100 custom-card rounded-3 shadow-sm overflow-hidden d-flex flex-column">
+                    <img src="@project.ImageUrl" class="card-img-top project-img" alt="@project.Title" />
+                    <div class="p-3 d-flex flex-column flex-grow-1">
+                        <h5 class="fw-bold text-info">@project.Title</h5>
+                        <p class="text-light opacity-75 small flex-grow-1">@project.Description</p>
+                        <div class="d-flex flex-wrap gap-1 mt-2">
+                            @foreach (var tech in project.TechStack)
+                            {
+                                <span class="badge bg-secondary opacity-75">@tech</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Sección DevOps y Cloud -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="p-4 custom-card rounded-3 shadow-sm">
+                <h3 class="fw-bold mb-2 text-warning">Herramientas en Práctica & Cloud</h3>
+                <p class="text-light opacity-75 mb-3">Infraestructura y tecnologías con las que trabajo actualmente:</p>
+                <div class="d-flex flex-wrap gap-2">
+                    @foreach (var item in Model.LearningStack)
+                    {
+                        <span class="badge bg-secondary fs-6 px-3 py-2">⚙️ @item</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
